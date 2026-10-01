@@ -3,6 +3,7 @@ package com.jetwatch
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
@@ -21,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.jetwatch.ui.JetViewModel
 import com.jetwatch.ui.LogoSplash
+import com.jetwatch.ui.about.AboutScreen
 import com.jetwatch.ui.details.FlightDetailsScreen
 import com.jetwatch.ui.details.FlightDetailsViewModel
 import com.jetwatch.ui.map.MapScreen
@@ -36,6 +38,7 @@ private sealed interface Screen {
     data object Map : Screen
     data object Search : Screen
     data object Saved : Screen
+    data object About : Screen
     data class Details(val request: DetailsRequest) : Screen
 }
 
@@ -80,6 +83,9 @@ fun App(
                         NavItem("Saved", current is Screen.Saved, Icons.Filled.Star) {
                             stack = listOf(Screen.Saved)
                         }
+                        NavItem("About", current is Screen.About, Icons.Filled.Info) {
+                            stack = listOf(Screen.About)
+                        }
                     }
                 }
             },
@@ -100,6 +106,7 @@ fun App(
                     viewModel = savedViewModel,
                     modifier = Modifier.padding(padding),
                 )
+                Screen.About -> AboutScreen(modifier = Modifier.padding(padding))
                 is Screen.Details -> FlightDetailsScreen(
                     onBack = { if (stack.size > 1) stack = stack.dropLast(1) },
                     onFollow = onFollowFlight,
