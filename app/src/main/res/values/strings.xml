@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">JetWatch</string>
+    <string name="alert_channel_name">Flight alerts</string>
+    <string name="alert_channel_desc">Delays, departures, and landings for flights you follow</string>
+</resources>
