@@ -14,7 +14,7 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
         title = "JetWatch",
     ) {
-        App(graph)
+        App(graph, onExit = ::exitApplication)
     }
 }
 
