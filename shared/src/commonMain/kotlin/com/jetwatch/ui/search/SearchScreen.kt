@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,7 +14,9 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import com.jetwatch.ui.BackTopBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -27,13 +30,21 @@ import com.jetwatch.ui.format.statusLabel
 
 @Composable
 fun SearchScreen(
+    onBack: () -> Unit,
     onOpenFlight: (String) -> Unit,
     viewModel: SearchViewModel,
     modifier: Modifier = Modifier,
 ) {
     val state by viewModel.state.collectAsState()
-    Column(modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text("Search", style = MaterialTheme.typography.headlineSmall)
+    Scaffold(
+        modifier = modifier,
+        topBar = { BackTopBar("Search", onBack) },
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+    ) { padding ->
+    Column(
+        Modifier.fillMaxSize().padding(padding).padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
         OutlinedTextField(
             value = state.query,
             onValueChange = viewModel::onQueryChange,
@@ -77,6 +88,7 @@ fun SearchScreen(
                 item { Text("Nothing matched that search.") }
             }
         }
+    }
     }
 }
 
