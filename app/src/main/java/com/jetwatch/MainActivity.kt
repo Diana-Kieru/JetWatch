@@ -25,6 +25,7 @@ class MainActivity : ComponentActivity() {
             App(
                 graph = graph,
                 openFlightKey = intent.getStringExtra(JetWatchApplication.EXTRA_FLIGHT_KEY),
+                onExit = { finish() },
                 onFollowFlight = {
                     if (Build.VERSION.SDK_INT >= 33 &&
                         checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) !=
