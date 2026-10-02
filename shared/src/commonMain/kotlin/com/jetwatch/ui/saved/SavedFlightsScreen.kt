@@ -7,13 +7,16 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import com.jetwatch.ui.BackTopBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -26,13 +29,21 @@ import com.jetwatch.ui.format.statusLabel
 
 @Composable
 fun SavedFlightsScreen(
+    onBack: () -> Unit,
     onOpenFlight: (String) -> Unit,
     viewModel: SavedFlightsViewModel,
     modifier: Modifier = Modifier,
 ) {
     val flights by viewModel.flights.collectAsState()
-    Column(modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text("Saved", style = MaterialTheme.typography.headlineSmall)
+    Scaffold(
+        modifier = modifier,
+        topBar = { BackTopBar("Saved", onBack) },
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+    ) { padding ->
+    Column(
+        Modifier.fillMaxSize().padding(padding).padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
         if (flights.isEmpty()) {
             Text("Follow a flight from its details screen. JetWatch checks it in the background and notifies you when it is delayed, departs, or lands.")
         } else {
@@ -49,6 +60,7 @@ fun SavedFlightsScreen(
                 }
             }
         }
+    }
     }
 }
 
