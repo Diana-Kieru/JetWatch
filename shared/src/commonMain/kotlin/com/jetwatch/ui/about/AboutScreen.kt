@@ -4,13 +4,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import com.jetwatch.ui.BackTopBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
@@ -22,15 +25,20 @@ private const val TERMS_OF_USE_URL =
     "https://github.com/Diana-Kieru/JetWatch/blob/main/docs/terms-of-use.md"
 
 @Composable
-fun AboutScreen(modifier: Modifier = Modifier) {
+fun AboutScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
+    Scaffold(
+        modifier = modifier,
+        topBar = { BackTopBar("About", onBack) },
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+    ) { padding ->
     Column(
-        modifier
+        Modifier
             .fillMaxSize()
+            .padding(padding)
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text("About", style = MaterialTheme.typography.headlineSmall)
         Text(
             "JetWatch is a flight tracker. The map shows live aircraft, and a flight page fills in the number, airline, origin, destination, gate, and status. Follow a flight and this phone notifies you when it is delayed, departs, or lands.",
         )
@@ -69,6 +77,7 @@ fun AboutScreen(modifier: Modifier = Modifier) {
                 "To delete everything JetWatch stored, uninstall the app, or open Settings, then Apps, JetWatch, Storage, and Clear data.",
             )
         }
+    }
     }
 }
 
